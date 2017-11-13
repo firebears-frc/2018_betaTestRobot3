@@ -1,11 +1,15 @@
 package org.firebears.betaTestRobot3;
 
+import org.firebears.betaTestRobot3.commands.ClimbDownCommand;
+import org.firebears.betaTestRobot3.commands.ClimbUpCommand;
+import org.firebears.betaTestRobot3.commands.DriveForwardCommand;
 import org.firebears.betaTestRobot3.subsystems.Chassis;
 import org.firebears.betaTestRobot3.subsystems.Climber;
 import org.firebears.util.CANTalon;
 import org.firebears.util.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -41,6 +45,9 @@ public class RobotConfig {
 	public Chassis chassis;
 	public Climber climber;
 
+	/**
+	 * Construct RobotConfig. Create all low-level components to support the robot.
+	 */
 	public RobotConfig() {
 		frontLeftMotor = new CANTalon(CAN_FRONT_LEFT);
 		frontLeftMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -94,25 +101,35 @@ public class RobotConfig {
 		LiveWindow.addActuator("Climber", "climberMotor", climberMotor);
 
 		joystick = new Joystick(0);
+	}
 
-		chassis = new Chassis(joystick, frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
-		climber = new Climber(climberMotor);
-
+	/**
+	 * Perform initializations of high-level components.
+	 */
+	public void init() {
+		initializeSubsystems();
+		initializeOperatorInterface();
 	}
 
 	/**
 	 * Initialize high-level robot subsystems.
 	 */
-	public void initializeSubsystems() {
-
+	protected void initializeSubsystems() {
+		chassis = new Chassis(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+		climber = new Climber(climberMotor);
+		chassis.setJoystick(joystick);
 	}
 
 	/**
 	 * Initializes high-level components and attaches new Commands to Joystick
 	 * buttons and Triggers. Also may put Commands on the SmartDashboard.
 	 */
-	public void initializeOperatorInterface() {
-
+	protected void initializeOperatorInterface() {
+		JoystickButton upButton = new JoystickButton(joystick, 7);
+		upButton.whileHeld(new ClimbUpCommand(climber));
+		
+		JoystickButton downButton = new JoystickButton(joystick, 9);
+		downButton.whileHeld(new ClimbDownCommand(climber));
 	}
 
 	/**
@@ -121,6 +138,6 @@ public class RobotConfig {
 	 * @return Command for autonomous mode, or {@code null}.
 	 */
 	public Command getAutonomousCommand() {
-		return null;
+		return new DriveForwardCommand(chassis);
 	}
 }

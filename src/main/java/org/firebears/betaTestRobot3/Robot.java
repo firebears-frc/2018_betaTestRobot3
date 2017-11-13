@@ -11,8 +11,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		robotConfig = new RobotConfig();
-		robotConfig.initializeSubsystems();
-		robotConfig.initializeOperatorInterface();
+		robotConfig.init();
 	}
 
 	@Override

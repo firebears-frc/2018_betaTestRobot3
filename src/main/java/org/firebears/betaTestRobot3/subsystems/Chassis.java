@@ -10,17 +10,21 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 public class Chassis extends Subsystem {
 
 	private final MecanumDrive robotDrive;
-	private final Joystick joystick;
+	private Joystick joystick = null;
+	private DriveCommand defaultCommand = null;
 
-	public Chassis(Joystick joystick, SpeedController frontLeftMotor, SpeedController rearLeftMotor,
-			SpeedController frontRightMotor, SpeedController rearRightMotor) {
-		this.joystick = joystick;
+	public Chassis(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor,
+			SpeedController rearRightMotor) {
 		robotDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 	}
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new DriveCommand(joystick, this));
+		defaultCommand = new DriveCommand(this);
+		if (joystick != null) {
+			defaultCommand.setJoystick(joystick);
+		}
+		setDefaultCommand(defaultCommand);
 	}
 
 	public void drive(double x, double y, double rotation) {
@@ -29,5 +33,15 @@ public class Chassis extends Subsystem {
 
 	public void stop() {
 		drive(0.0, 0.0, 0.0);
+	}
+
+	/**
+	 * Set the joystick that will control driving.
+	 */
+	public void setJoystick(Joystick joystick) {
+		this.joystick = joystick;
+		if (defaultCommand != null) {
+			defaultCommand.setJoystick(joystick);
+		}
 	}
 }
