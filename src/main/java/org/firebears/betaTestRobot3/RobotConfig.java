@@ -1,12 +1,16 @@
 package org.firebears.betaTestRobot3;
 
+import java.io.File;
+
 import org.firebears.betaTestRobot3.commands.ClimbDownCommand;
 import org.firebears.betaTestRobot3.commands.ClimbUpCommand;
+import org.firebears.betaTestRobot3.commands.DriveCommand;
 import org.firebears.betaTestRobot3.commands.DriveForwardCommand;
 import org.firebears.betaTestRobot3.subsystems.Chassis;
 import org.firebears.betaTestRobot3.subsystems.Climber;
 import org.firebears.util.CANTalon;
 import org.firebears.util.CANTalon.FeedbackDevice;
+import org.firebears.util.RobotReport;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -44,11 +48,15 @@ public class RobotConfig {
 
 	public Chassis chassis;
 	public Climber climber;
+	
+	public RobotReport report;
 
 	/**
 	 * Construct RobotConfig. Create all low-level components to support the robot.
 	 */
 	public RobotConfig() {
+		report = new RobotReport("betaTestRobot3");
+		
 		frontLeftMotor = new CANTalon(CAN_FRONT_LEFT);
 		frontLeftMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
 		frontLeftMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);// is this covered above with the
@@ -60,6 +68,7 @@ public class RobotConfig {
 		frontLeftMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		frontLeftMotor.enable();
 		LiveWindow.addActuator("Chassis", "frontLeft", frontLeftMotor);
+		report.addCAN(CAN_FRONT_LEFT, "frontLeft", frontLeftMotor);
 
 		rearLeftMotor = new CANTalon(CAN_REAR_LEFT);
 		rearLeftMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -72,6 +81,7 @@ public class RobotConfig {
 		rearLeftMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		rearLeftMotor.enable();
 		LiveWindow.addActuator("Chassis", "rearLeft", rearLeftMotor);
+		report.addCAN(CAN_REAR_LEFT, "rearLeft", rearLeftMotor);
 
 		frontRightMotor = new CANTalon(CAN_FRONT_RIGHT);
 		frontRightMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -84,6 +94,7 @@ public class RobotConfig {
 		frontRightMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		frontRightMotor.enable();
 		LiveWindow.addActuator("Chassis", "frontRight", frontRightMotor);
+		report.addCAN(CAN_FRONT_RIGHT, "frontRight", frontRightMotor);
 
 		rearRightMotor = new CANTalon(CAN_REAR_RIGHT);
 		rearRightMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -96,11 +107,19 @@ public class RobotConfig {
 		rearRightMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		rearRightMotor.enable();
 		LiveWindow.addActuator("Chassis", "rearRight", rearRightMotor);
+		report.addCAN(CAN_REAR_RIGHT, "rearRight", rearRightMotor);
 
 		climberMotor = new CANTalon(CAN_CLIMBER);
 		LiveWindow.addActuator("Climber", "climberMotor", climberMotor);
+		report.addCAN(CAN_CLIMBER, "climberMotor", climberMotor);
 
-		joystick = new Joystick(0);
+		joystick = new Joystick(0) {
+			public int getAxisCount() {
+				// temporary hack to get around bug in Joystick class.
+				return Math.max(5, super.getAxisCount());
+			}
+		};
+		report.addJoystick(0, "joystick", joystick);
 	}
 
 	/**
@@ -109,6 +128,10 @@ public class RobotConfig {
 	public void init() {
 		initializeSubsystems();
 		initializeOperatorInterface();
+		
+		chassis.setDefaultCommand(new DriveCommand(chassis, joystick));
+		
+		report.write(new File("/home/lvuser/robotReport.md"));
 	}
 
 	/**
@@ -117,7 +140,6 @@ public class RobotConfig {
 	protected void initializeSubsystems() {
 		chassis = new Chassis(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 		climber = new Climber(climberMotor);
-		chassis.setJoystick(joystick);
 	}
 
 	/**
@@ -126,10 +148,14 @@ public class RobotConfig {
 	 */
 	protected void initializeOperatorInterface() {
 		JoystickButton upButton = new JoystickButton(joystick, 7);
-		upButton.whileHeld(new ClimbUpCommand(climber));
+		Command upCommand = new ClimbUpCommand(climber);
+		upButton.whileHeld(upCommand);
+		report.addJoystickButton(0, 7, "climb up", upCommand);
 		
 		JoystickButton downButton = new JoystickButton(joystick, 9);
-		downButton.whileHeld(new ClimbDownCommand(climber));
+		Command downCommand = new ClimbDownCommand(climber);
+		downButton.whileHeld(downCommand);
+		report.addJoystickButton(0, 9, "climb down", downCommand);
 	}
 
 	/**

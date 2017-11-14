@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveCommand extends Command {
 
 	private final Chassis chassis;
-	private Joystick joystick = null;
+	private final Joystick joystick;
 
-	public DriveCommand(Chassis chassis) {
+	public DriveCommand(Chassis chassis, Joystick joystick) {
 		this.chassis = chassis;
+		this.joystick = joystick;
 		requires(this.chassis);
 	}
 
@@ -21,18 +22,9 @@ public class DriveCommand extends Command {
 	}
 
 	protected void execute() {
-		assert joystick!=null : "You must set the joystick in initialization";
 		double x = joystick.getX();
 		double y = joystick.getY();
 		double rotation = joystick.getTwist();
 		chassis.drive(x, y, rotation);
 	}
-	
-	/**
-	 * Set the joystick that will control driving.
-	 */
-	public void setJoystick(Joystick joystick) {
-		this.joystick = joystick;
-	}
-
 }
