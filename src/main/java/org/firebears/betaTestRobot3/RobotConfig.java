@@ -56,6 +56,7 @@ public class RobotConfig {
 	 */
 	public RobotConfig() {
 		report = new RobotReport("betaTestRobot3");
+		report.setDescription("Command-based robot example, with dependency injection.");
 		
 		frontLeftMotor = new CANTalon(CAN_FRONT_LEFT);
 		frontLeftMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -131,7 +132,7 @@ public class RobotConfig {
 		
 		chassis.setDefaultCommand(new DriveCommand(chassis, joystick));
 		
-		report.write(new File("/home/lvuser/robotReport.md"));
+		report.write(new File(System.getProperty("user.home"), "robotReport.md"));
 	}
 
 	/**
