@@ -9,8 +9,10 @@ import org.firebears.betaTestRobot3.commands.DriveForwardCommand;
 import org.firebears.betaTestRobot3.subsystems.Chassis;
 import org.firebears.betaTestRobot3.subsystems.Climber;
 import org.firebears.util.CANTalon;
-import org.firebears.util.CANTalon.FeedbackDevice;
 import org.firebears.util.RobotReport;
+
+import com.ctre.phoenix.MotorControl.ControlMode;
+import com.ctre.phoenix.MotorControl.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -48,7 +50,7 @@ public class RobotConfig {
 
 	public Chassis chassis;
 	public Climber climber;
-	
+
 	public RobotReport report;
 
 	/**
@@ -57,9 +59,9 @@ public class RobotConfig {
 	public RobotConfig() {
 		report = new RobotReport("betaTestRobot3");
 		report.setDescription("Command-based robot example, with dependency injection.");
-		
+
 		frontLeftMotor = new CANTalon(CAN_FRONT_LEFT);
-		frontLeftMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		frontLeftMotor.changeControlMode(ControlMode.Velocity);
 		frontLeftMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);// is this covered above with the
 		frontLeftMotor.reverseSensor(false);// is this covered above with the sRX_PIDQuadratureEncoder1 ?????
 		frontLeftMotor.configNominalOutputVoltage(+0.0d, -0.0d);// Forward/reverse threshold
@@ -72,7 +74,7 @@ public class RobotConfig {
 		report.addCAN(CAN_FRONT_LEFT, "frontLeft", frontLeftMotor);
 
 		rearLeftMotor = new CANTalon(CAN_REAR_LEFT);
-		rearLeftMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		rearLeftMotor.changeControlMode(ControlMode.Velocity);
 		rearLeftMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);// is this covered above with the
 		rearLeftMotor.reverseSensor(false);// is this covered above with the sRX_PIDQuadratureEncoder1 ?????
 		rearLeftMotor.configNominalOutputVoltage(+0.0d, -0.0d);// Forward/reverse threshold
@@ -85,7 +87,7 @@ public class RobotConfig {
 		report.addCAN(CAN_REAR_LEFT, "rearLeft", rearLeftMotor);
 
 		frontRightMotor = new CANTalon(CAN_FRONT_RIGHT);
-		frontRightMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		frontRightMotor.changeControlMode(ControlMode.Velocity);
 		frontRightMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);// is this covered above with the
 		frontRightMotor.reverseSensor(false);// is this covered above with the sRX_PIDQuadratureEncoder1 ?????
 		frontRightMotor.configNominalOutputVoltage(+0.0d, -0.0d);// Forward/reverse threshold
@@ -98,7 +100,7 @@ public class RobotConfig {
 		report.addCAN(CAN_FRONT_RIGHT, "frontRight", frontRightMotor);
 
 		rearRightMotor = new CANTalon(CAN_REAR_RIGHT);
-		rearRightMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+		rearRightMotor.changeControlMode(ControlMode.Velocity);
 		rearRightMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);// is this covered above with the
 		rearRightMotor.reverseSensor(false);// is this covered above with the sRX_PIDQuadratureEncoder1 ?????
 		rearRightMotor.configNominalOutputVoltage(+0.0d, -0.0d);// Forward/reverse threshold
@@ -129,9 +131,9 @@ public class RobotConfig {
 	public void init() {
 		initializeSubsystems();
 		initializeOperatorInterface();
-		
+
 		chassis.setDefaultCommand(new DriveCommand(chassis, joystick));
-		
+
 		report.write(new File(System.getProperty("user.home"), "robotReport.md"));
 	}
 
@@ -152,7 +154,7 @@ public class RobotConfig {
 		Command upCommand = new ClimbUpCommand(climber);
 		upButton.whileHeld(upCommand);
 		report.addJoystickButton(0, 7, "climb up", upCommand);
-		
+
 		JoystickButton downButton = new JoystickButton(joystick, 9);
 		Command downCommand = new ClimbDownCommand(climber);
 		downButton.whileHeld(downCommand);
