@@ -36,7 +36,7 @@ public class RobotConfig {
 	static final double PID_D = 0;
 	static final double PID_FF = 0;
 	static final int PID_IZONE = 256;
-	static final double PID_RAMPRATE = 10;
+	static final double PID_RAMPRATE = 1;
 	static final int PID_PROFILE = 0;
 	static final int ENCODER_COUNTS_PER_REV = 255;
 
