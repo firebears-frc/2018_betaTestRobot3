@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class RobotConfig {
 
+	public static final boolean DEBUG = true;
+	
 	public static final int CAN_FRONT_LEFT = 2;
 	public static final int CAN_REAR_LEFT = 4;
 	public static final int CAN_FRONT_RIGHT = 3;
@@ -70,7 +72,8 @@ public class RobotConfig {
 		frontLeftMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		frontLeftMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		frontLeftMotor.enable();
-		LiveWindow.addActuator("Chassis", "frontLeft", frontLeftMotor);
+		frontLeftMotor.setName("Chassis", "frontLeft");
+		LiveWindow.add(frontLeftMotor);
 		report.addCAN(CAN_FRONT_LEFT, "frontLeft", frontLeftMotor);
 
 		rearLeftMotor = new CANTalon(CAN_REAR_LEFT);
@@ -83,7 +86,8 @@ public class RobotConfig {
 		rearLeftMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		rearLeftMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		rearLeftMotor.enable();
-		LiveWindow.addActuator("Chassis", "rearLeft", rearLeftMotor);
+		rearLeftMotor.setName("Chassis", "rearLeft");
+		LiveWindow.add(rearLeftMotor);
 		report.addCAN(CAN_REAR_LEFT, "rearLeft", rearLeftMotor);
 
 		frontRightMotor = new CANTalon(CAN_FRONT_RIGHT);
@@ -96,7 +100,8 @@ public class RobotConfig {
 		frontRightMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		frontRightMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		frontRightMotor.enable();
-		LiveWindow.addActuator("Chassis", "frontRight", frontRightMotor);
+		frontRightMotor.setName("Chassis", "frontRight");
+		LiveWindow.add(frontRightMotor);
 		report.addCAN(CAN_FRONT_RIGHT, "frontRight", frontRightMotor);
 
 		rearRightMotor = new CANTalon(CAN_REAR_RIGHT);
@@ -109,19 +114,16 @@ public class RobotConfig {
 		rearRightMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		rearRightMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		rearRightMotor.enable();
-		LiveWindow.addActuator("Chassis", "rearRight", rearRightMotor);
+		rearRightMotor.setName("Chassis", "rearRight");
+		LiveWindow.add(rearRightMotor);
 		report.addCAN(CAN_REAR_RIGHT, "rearRight", rearRightMotor);
 
 		climberMotor = new CANTalon(CAN_CLIMBER);
-		LiveWindow.addActuator("Climber", "climberMotor", climberMotor);
+		climberMotor.setName("Climber", "climberMotor");
+		LiveWindow.add(climberMotor);
 		report.addCAN(CAN_CLIMBER, "climberMotor", climberMotor);
 
-		joystick = new Joystick(0) {
-			public int getAxisCount() {
-				// temporary hack to get around bug in Joystick class.
-				return Math.max(5, super.getAxisCount());
-			}
-		};
+		joystick = new Joystick(0);
 		report.addJoystick(0, "joystick", joystick);
 	}
 
@@ -134,7 +136,7 @@ public class RobotConfig {
 
 		chassis.setDefaultCommand(new DriveCommand(chassis, joystick));
 
-		report.write(new File(System.getProperty("user.home"), "robotReport.md"));
+		report.write(new File(System.getProperty("user.home"), "robotReport.md"), DEBUG);
 	}
 
 	/**

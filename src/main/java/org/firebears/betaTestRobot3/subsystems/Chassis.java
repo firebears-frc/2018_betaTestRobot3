@@ -1,9 +1,12 @@
 package org.firebears.betaTestRobot3.subsystems;
 
+import static org.firebears.betaTestRobot3.RobotConfig.DEBUG;
+
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Chassis extends Subsystem {
 
@@ -25,6 +28,10 @@ public class Chassis extends Subsystem {
 
 	public void drive(double x, double y, double rotation) {
 		robotDrive.driveCartesian(x, y, rotation);
+		if (DEBUG) {
+			SmartDashboard.putNumber("x", x);
+			SmartDashboard.putNumber("y", y);
+		}
 	}
 
 	public void stop() {
