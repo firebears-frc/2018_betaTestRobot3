@@ -11,8 +11,8 @@ import org.firebears.betaTestRobot3.subsystems.Climber;
 import org.firebears.util.CANTalon;
 import org.firebears.util.RobotReport;
 
-import com.ctre.phoenix.MotorControl.ControlMode;
-import com.ctre.phoenix.MotorControl.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
