@@ -66,8 +66,6 @@ public class RobotConfig {
 		frontLeftMotor.changeControlMode(ControlMode.Velocity);
 		frontLeftMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);// is this covered above with the
 		frontLeftMotor.reverseSensor(false);// is this covered above with the sRX_PIDQuadratureEncoder1 ?????
-		frontLeftMotor.configNominalOutputVoltage(+0.0d, -0.0d);// Forward/reverse threshold
-		frontLeftMotor.configPeakOutputVoltage(+12.0d, -12.0d);
 		frontLeftMotor.setPID(PID_P, PID_I, PID_D, PID_FF, PID_IZONE, PID_RAMPRATE, PID_PROFILE);
 		frontLeftMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		frontLeftMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
@@ -80,8 +78,6 @@ public class RobotConfig {
 		rearLeftMotor.changeControlMode(ControlMode.Velocity);
 		rearLeftMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);// is this covered above with the
 		rearLeftMotor.reverseSensor(false);// is this covered above with the sRX_PIDQuadratureEncoder1 ?????
-		rearLeftMotor.configNominalOutputVoltage(+0.0d, -0.0d);// Forward/reverse threshold
-		rearLeftMotor.configPeakOutputVoltage(+12.0d, -12.0d);
 		rearLeftMotor.setPID(PID_P, PID_I, PID_D, PID_FF, PID_IZONE, PID_RAMPRATE, PID_PROFILE);
 		rearLeftMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		rearLeftMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
@@ -94,8 +90,6 @@ public class RobotConfig {
 		frontRightMotor.changeControlMode(ControlMode.Velocity);
 		frontRightMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);// is this covered above with the
 		frontRightMotor.reverseSensor(false);// is this covered above with the sRX_PIDQuadratureEncoder1 ?????
-		frontRightMotor.configNominalOutputVoltage(+0.0d, -0.0d);// Forward/reverse threshold
-		frontRightMotor.configPeakOutputVoltage(+12.0d, -12.0d);
 		frontRightMotor.setPID(PID_P, PID_I, PID_D, PID_FF, PID_IZONE, PID_RAMPRATE, PID_PROFILE);
 		frontRightMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		frontRightMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
@@ -108,8 +102,6 @@ public class RobotConfig {
 		rearRightMotor.changeControlMode(ControlMode.Velocity);
 		rearRightMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);// is this covered above with the
 		rearRightMotor.reverseSensor(false);// is this covered above with the sRX_PIDQuadratureEncoder1 ?????
-		rearRightMotor.configNominalOutputVoltage(+0.0d, -0.0d);// Forward/reverse threshold
-		rearRightMotor.configPeakOutputVoltage(+12.0d, -12.0d);
 		rearRightMotor.setPID(PID_P, PID_I, PID_D, PID_FF, PID_IZONE, PID_RAMPRATE, PID_PROFILE);
 		rearRightMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		rearRightMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);

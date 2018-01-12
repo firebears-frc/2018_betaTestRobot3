@@ -15,6 +15,7 @@ public class Chassis extends Subsystem {
 	public Chassis(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor,
 			SpeedController rearRightMotor) {
 		robotDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+		robotDrive.setSubsystem("Chassis");
 	}
 
 	@Override
