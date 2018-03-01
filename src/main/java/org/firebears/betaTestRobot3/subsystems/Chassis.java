@@ -10,32 +10,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Chassis extends Subsystem {
 
-	private final MecanumDrive robotDrive;
+    private final MecanumDrive robotDrive;
 
-	public Chassis(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor,
-			SpeedController rearRightMotor) {
-		robotDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
-		robotDrive.setSubsystem("Chassis");
-	}
+    public Chassis(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor,
+	    SpeedController rearRightMotor) {
+	robotDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+	addChild(robotDrive);
+    }
 
-	@Override
-	protected void initDefaultCommand() {
-	}
+    @Override
+    protected void initDefaultCommand() {
+    }
 
-	@Override
-	public void setDefaultCommand(Command command) {
-		super.setDefaultCommand(command);
-	}
+    @Override
+    public void setDefaultCommand(Command command) {
+	super.setDefaultCommand(command);
+    }
 
-	public void drive(double x, double y, double rotation) {
-		robotDrive.driveCartesian(x, y, rotation);
-		if (DEBUG) {
-			SmartDashboard.putNumber("x", x);
-			SmartDashboard.putNumber("y", y);
-		}
+    public void drive(double x, double y, double rotation) {
+	robotDrive.driveCartesian(x, y, rotation);
+	if (DEBUG) {
+	    SmartDashboard.putNumber("x", x);
+	    SmartDashboard.putNumber("y", y);
 	}
+    }
 
-	public void stop() {
-		drive(0.0, 0.0, 0.0);
-	}
+    public void stop() {
+	drive(0.0, 0.0, 0.0);
+    }
 }

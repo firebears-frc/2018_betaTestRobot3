@@ -17,7 +17,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * Configures all components required by subsystems.
@@ -70,8 +69,7 @@ public class RobotConfig {
 		frontLeftMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		frontLeftMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		frontLeftMotor.enable();
-		frontLeftMotor.setName("Chassis", "frontLeft");
-		LiveWindow.add(frontLeftMotor);
+		frontLeftMotor.setName("frontLeft");
 		report.addCAN(CAN_FRONT_LEFT, "frontLeft", frontLeftMotor);
 
 		rearLeftMotor = new CANTalon(CAN_REAR_LEFT);
@@ -82,8 +80,7 @@ public class RobotConfig {
 		rearLeftMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		rearLeftMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		rearLeftMotor.enable();
-		rearLeftMotor.setName("Chassis", "rearLeft");
-		LiveWindow.add(rearLeftMotor);
+		rearLeftMotor.setName("rearLeft");
 		report.addCAN(CAN_REAR_LEFT, "rearLeft", rearLeftMotor);
 
 		frontRightMotor = new CANTalon(CAN_FRONT_RIGHT);
@@ -94,8 +91,7 @@ public class RobotConfig {
 		frontRightMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		frontRightMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		frontRightMotor.enable();
-		frontRightMotor.setName("Chassis", "frontRight");
-		LiveWindow.add(frontRightMotor);
+		frontRightMotor.setName("frontRight");
 		report.addCAN(CAN_FRONT_RIGHT, "frontRight", frontRightMotor);
 
 		rearRightMotor = new CANTalon(CAN_REAR_RIGHT);
@@ -106,13 +102,11 @@ public class RobotConfig {
 		rearRightMotor.configEncoderCodesPerRev(ENCODER_COUNTS_PER_REV);//
 		rearRightMotor.enableBrakeMode(CHASSIS_BRAKE_MODE);
 		rearRightMotor.enable();
-		rearRightMotor.setName("Chassis", "rearRight");
-		LiveWindow.add(rearRightMotor);
+		rearRightMotor.setName("rearRight");
 		report.addCAN(CAN_REAR_RIGHT, "rearRight", rearRightMotor);
 
 		climberMotor = new CANTalon(CAN_CLIMBER);
-		climberMotor.setName("Climber", "climberMotor");
-		LiveWindow.add(climberMotor);
+		climberMotor.setName("climberMotor");
 		report.addCAN(CAN_CLIMBER, "climberMotor", climberMotor);
 
 		joystick = new Joystick(0);
