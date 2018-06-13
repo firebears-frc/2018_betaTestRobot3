@@ -19,7 +19,7 @@
         {
             "label": "refresh",
             "type": "shell",
-            "command": "./gradlew build",
+            "command": "./gradlew wpi",
             "group": "build"
         },
         {
