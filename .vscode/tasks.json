@@ -1,0 +1,32 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "./gradlew --offline assemble",
+            "group": "build"
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "./gradlew --offline clean",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "refresh",
+            "type": "shell",
+            "command": "./gradlew build",
+            "group": "build"
+        },
+        {
+            "label": "deploy",
+            "type": "shell",
+            "command": "./gradlew --offline deploy",
+            "group": "build"
+        }
+    ]
+}

@@ -13,9 +13,9 @@ public class Chassis extends Subsystem {
     private final MecanumDrive robotDrive;
 
     public Chassis(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor,
-	    SpeedController rearRightMotor) {
-	robotDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
-	addChild(robotDrive);
+            SpeedController rearRightMotor) {
+        robotDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+//        addChild(robotDrive);
     }
 
     @Override
@@ -24,18 +24,18 @@ public class Chassis extends Subsystem {
 
     @Override
     public void setDefaultCommand(Command command) {
-	super.setDefaultCommand(command);
+        super.setDefaultCommand(command);
     }
 
     public void drive(double x, double y, double rotation) {
-	robotDrive.driveCartesian(x, y, rotation);
-	if (DEBUG) {
-	    SmartDashboard.putNumber("x", x);
-	    SmartDashboard.putNumber("y", y);
-	}
+        robotDrive.driveCartesian(x, y, rotation);
+        if (DEBUG) {
+            SmartDashboard.putNumber("x", x);
+            SmartDashboard.putNumber("y", y);
+        }
     }
 
     public void stop() {
-	drive(0.0, 0.0, 0.0);
+        drive(0.0, 0.0, 0.0);
     }
 }
