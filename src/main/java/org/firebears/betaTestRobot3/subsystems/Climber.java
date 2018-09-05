@@ -10,7 +10,7 @@ public class Climber extends Subsystem {
 
     public Climber(SpeedController motor) {
 	this.climberMotor = motor;
-	addChild(((Sendable)climberMotor));
+//	addChild(((Sendable)climberMotor));
     }
 
     @Override
